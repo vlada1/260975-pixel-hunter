@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Влада Андрущенко](https://up.htmlacademy.ru/ecmascript/3/user/260975).
-* Наставник: `Неизвестно`.
+* Наставник: [Егор Огарков](https://up.htmlacademy.ru/ecmascript/3/user/58697).
 
 ---
 
