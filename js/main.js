@@ -1,4 +1,6 @@
 const gameScreens = document.querySelectorAll(`template`);
+const next = 39;
+const prev = 37;
 let currentScreen = 1;
 
 let clearMainPage = () => {
@@ -18,14 +20,14 @@ showScreenByNumber(1);
 
 addEventListener(`keydown`, function (event) {
   if (currentScreen > 1) {
-    if (event.keyCode === 37 && event.altKey) {
+    if (event.keyCode === prev && event.altKey) {
       currentScreen--;
       showScreenByNumber(currentScreen);
     }
   }
 
   if (currentScreen < gameScreens.length) {
-    if (event.keyCode === 39 && event.altKey) {
+    if (event.keyCode === next && event.altKey) {
       currentScreen++;
       showScreenByNumber(currentScreen);
     }
