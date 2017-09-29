@@ -1,33 +1,32 @@
 const gameScreens = document.querySelectorAll(`template`);
-const next = 39;
-const prev = 37;
+const mainElement = document.querySelector(`main`);
+const RIGHT_ARROW_KEYKODE = 39;
+const LEFT_ARROW_KEYKODE = 37;
 let currentScreen = 1;
 
-let clearMainPage = () => {
-  const mainElement = document.querySelector(`main`);
+const clearMainPage = () => {
   while (mainElement.firstChild) {
     mainElement.removeChild(mainElement.firstChild);
   }
 }
 
-let showScreenByNumber = (page) => {
+const showScreenByNumber = (page) => {
   clearMainPage();
-  const mainElement = document.querySelector(`main`);
   return mainElement.appendChild(gameScreens[page - 1].content.cloneNode(true));
 };
 
-showScreenByNumber(1);
+showScreenByNumber(currentScreen);
 
 addEventListener(`keydown`, function (event) {
   if (currentScreen > 1) {
-    if (event.keyCode === prev && event.altKey) {
+    if (event.keyCode === LEFT_ARROW_KEYKODE && event.altKey) {
       currentScreen--;
       showScreenByNumber(currentScreen);
     }
   }
 
   if (currentScreen < gameScreens.length) {
-    if (event.keyCode === next && event.altKey) {
+    if (event.keyCode === RIGHT_ARROW_KEYKODE && event.altKey) {
       currentScreen++;
       showScreenByNumber(currentScreen);
     }
