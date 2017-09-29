@@ -8,7 +8,7 @@ const clearMainPage = () => {
   while (mainElement.firstChild) {
     mainElement.removeChild(mainElement.firstChild);
   }
-}
+};
 
 const showScreenByNumber = (page) => {
   clearMainPage();
