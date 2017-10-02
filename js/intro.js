@@ -10,8 +10,8 @@ const introTemplate = `\
 const introElement = createDomElement(introTemplate);
 const introAsterisk = introElement.querySelector(`.intro__asterisk`);
 
-introAsterisk.onclick = () => {
+introAsterisk.addEventListener(`click`, () => {
   renderPage(greetingElement);
-};
+});
 
 export default introElement;

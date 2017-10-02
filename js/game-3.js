@@ -50,14 +50,12 @@ const gameElement = createDomElement(gameTemplate);
 const backToIntro = gameElement.querySelector(`.back`);
 const gameContent = gameElement.querySelector(`.game__content`);
 
-backToIntro.onclick = () => {
+backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
-};
+});
 
-gameContent.onclick = (evt) => {
-  if (evt.target.classList.contains(`game__option`)) {
-    renderPage(statsElement);
-  }
-};
+gameContent.addEventListener(`click`, (evt) => {
+  renderPage(statsElement);
+});
 
 export default gameElement;

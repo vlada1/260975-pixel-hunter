@@ -52,14 +52,14 @@ const gameElement = createDomElement(gameTemplate);
 const backToIntro = gameElement.querySelector(`.back`);
 const gameContent = gameElement.querySelector(`.game__content`);
 
-backToIntro.onclick = () => {
+backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
-};
+});
 
-gameContent.onclick = (evt) => {
+gameContent.addEventListener(`click`, (evt) => {
   if (evt.target.checked) {
     renderPage(gameTypeThree);
   }
-};
+});
 
 export default gameElement;

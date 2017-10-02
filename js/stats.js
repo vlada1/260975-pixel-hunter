@@ -114,8 +114,8 @@ const statsTemplate = `\
 const statsElement = createDomElement(statsTemplate);
 const backToIntro = statsElement.querySelector(`.back`);
 
-backToIntro.onclick = () => {
+backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
-};
+});
 
 export default statsElement;

@@ -63,15 +63,15 @@ const gameElement = createDomElement(gameTemplate);
 const backToIntro = gameElement.querySelector(`.back`);
 const gameContent = gameElement.querySelector(`.game__content`);
 
-backToIntro.onclick = () => {
+backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
-};
+});
 
-gameContent.onclick = () => {
+gameContent.addEventListener(`click`, () => {
   const checkedRadio = gameContent.querySelectorAll(`input[type="radio"]:checked`);
   if (checkedRadio.length > 1) {
     renderPage(gameTypeTwo);
   }
-};
+});
 
 export default gameElement;

@@ -33,17 +33,17 @@ const backToIntro = rulesElement.querySelector(`.back`);
 const nameField = rulesElement.querySelector(`.rules__input`);
 const submitRules = rulesElement.querySelector(`.rules__button`);
 
-backToIntro.onclick = () => {
+backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
-};
+});
 
-nameField.oninput = (evt) => {
+nameField.addEventListener(`input`, (evt) => {
   submitRules.disabled = (evt.target.value) ? false : true;
-};
+});
 
-submitRules.onclick = (evt) => {
+submitRules.addEventListener(`click`, (evt) => {
   evt.preventDefault();
   renderPage(gameTypeOne);
-};
+});
 
 export default rulesElement;

@@ -19,8 +19,8 @@ const greetingTemplate = `\
 const greetingElement = createDomElement(greetingTemplate);
 const nextPage = greetingElement.querySelector(`.greeting__continue`);
 
-nextPage.onclick = () => {
+nextPage.addEventListener(`click`, () => {
   renderPage(rulesElement);
-};
+});
 
 export default greetingElement;
