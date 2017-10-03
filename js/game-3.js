@@ -54,7 +54,7 @@ backToIntro.addEventListener(`click`, () => {
   renderPage(introElement);
 });
 
-gameContent.addEventListener(`click`, (evt) => {
+gameContent.addEventListener(`click`, () => {
   renderPage(statsElement);
 });
 
