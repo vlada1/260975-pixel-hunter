@@ -1,21 +1,16 @@
 class Timer {
-  constructor() {
-    this.currentTime = null;
-  }
-
-  configure(sec) {
+  constructor(sec) {
     if (sec < 0) {
-      return -1;
+      throw new Error(`Time can't be less then 0`);
     }
     this.currentTime = sec;
-    return this;
   }
 
   getTime() {
     return this.currentTime;
   }
 
-  start() {
+  tick() {
     if (this.currentTime === 0) {
       return `Time is up`;
     }
@@ -28,5 +23,4 @@ class Timer {
   }
 }
 
-const timer = new Timer();
-export default timer;
+export default Timer;
