@@ -1,10 +1,11 @@
 import {createDomElement, renderPage} from './service.js';
 import greetingElement from './greeting.js';
+import allData from '../components/game-data.js';
 
 const introTemplate = `\
   <div id="intro" class="intro">
     <h1 class="intro__asterisk">*</h1>
-    <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
+    <p class="intro__motto"><sup>*</sup> ${allData.introData.text}</p>
   </div>`;
 
 const introElement = createDomElement(introTemplate);
