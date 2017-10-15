@@ -1,4 +1,4 @@
-import introElement from './intro.js';
+import introElement from './templates/intro.js';
 import {renderPage} from './service.js';
 
 renderPage(introElement);

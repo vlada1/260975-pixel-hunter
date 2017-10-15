@@ -1,18 +1,10 @@
-import {createDomElement, renderPage} from './service.js';
-import gameTypeOne from './game-1.js';
-import introElement from './intro.js';
-
-const data = dataUnited.rulesData;
+import {createDomElement, renderPage, getNextLevel} from '../../service.js';
+import introElement from '../intro.js';
+import header from '../header.js';
+import data from './rules-data.js';
 
 const rulesTemplate = `\
-  <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-  </header>
+  ${header}
   <div class="rules">
     <h1 class="rules__title">${data.title}</h1>
     <p class="rules__description">${data.text}</p>
@@ -37,7 +29,7 @@ nameField.addEventListener(`input`, (evt) => {
 
 submitRules.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  renderPage(gameTypeOne);
+  getNextLevel()();
 });
 
 export default rulesElement;

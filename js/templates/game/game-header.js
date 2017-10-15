@@ -1,4 +1,4 @@
-const gameHeader = (callback) =>`\
+const headerTemplate = (callback) =>`\
   <header class="header">
     <div class="header__back">
       <span class="back">
@@ -12,4 +12,4 @@ const gameHeader = (callback) =>`\
     </div>
   </header>`;
 
-export default gameHeader;
+export default headerTemplate;

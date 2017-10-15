@@ -1,11 +1,10 @@
-import {createDomElement, renderPage} from './service.js';
-import rulesElement from './rules.js';
-
-const data = allData.greetingData;
+import {createDomElement, renderPage} from '../../service.js';
+import rulesElement from '../rules/rules.js';
+import data from './greeting-data.js';
 
 const greetingTemplate = `\
   <div class="greeting central--blur">
-    <div class="greeting__logo"><img src="${data.logo.src}" width="201" height="89" alt="Pixel Hunter"></div>
+    <div class="greeting__logo"><img src="${data.logo.src}" width="201" height="89" alt="${data.logo.alt}"></div>
     <h1 class="greeting__asterisk">*</h1>
     <div class="greeting__challenge">
       <h3>${data.title}</h3>

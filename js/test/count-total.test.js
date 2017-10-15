@@ -1,6 +1,5 @@
 import assert from 'assert';
-import {answerType} from '../components/game-data.js';
-import countTotal from '../components/count-total.js';
+import {answerType, countTotal} from '../components/count-total.js';
 
 const testCaseOne = {
   lives: 0,
