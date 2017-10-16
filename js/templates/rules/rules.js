@@ -1,4 +1,5 @@
-import {createDomElement, renderPage, getNextLevel} from '../../service.js';
+import {getNextLevel} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
 import introElement from '../intro.js';
 import header from '../header.js';
 import data from './rules-data.js';

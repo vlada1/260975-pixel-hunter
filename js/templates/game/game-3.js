@@ -1,4 +1,5 @@
-import {createDomElement, renderPage, getNextLevel, changeLive, getStats, resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
+import {getNextLevel, changeLive, getStats, resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
 import header from './game-header.js';
 import introElement from '../intro.js';
 
@@ -8,7 +9,7 @@ const content = (data) => `\
     <div class="game__option">
       <img src="${data.answers[0].src}" alt="Option 1" width="304" height="455">
     </div>
-    <div class="game__option  game__option--selected">
+    <div class="game__option">
       <img src="${data.answers[1].src}" alt="Option 1" width="304" height="455">
     </div>
     <div class="game__option">
@@ -26,7 +27,7 @@ const stats = (statsdata) => `\
 
 export default (data, statsdata, callback) => {
   const gameTemplate = `\
-  ${headerTemplate(callback)}
+  ${header(callback)}
   <div class="game">
     ${content(data)}
     ${stats(statsdata)}
@@ -35,17 +36,32 @@ export default (data, statsdata, callback) => {
   const gameElement = createDomElement(gameTemplate);
   const backToIntro = gameElement.querySelector(`.back`);
   const gameContent = gameElement.querySelector(`.game__content`);
+  const gameOptionArr = gameContent.querySelectorAll(`.game__option`);
 
   backToIntro.addEventListener(`click`, () => {
     resetUserData();
     resetGameDataValues();
     resetGameScreen();
+    renderPage(introElement);
   });
 
-    let answer;
+  gameContent.addEventListener(`click`, (evt) => {
+    if (evt.target.classList.contains(`game__option`)) {
+      (evt.target.classList.add(`game__option--selected`));
 
-  gameContent.addEventListener(`click`, () => {
-    getNextLevel()();
+      for (let i = 0; i < gameOptionArr.length; i++) {
+        if (gameOptionArr[i].classList.contains(`game__option--selected`)) {
+          let answer = data.answers[i].type;
+          if (answer === `paint`) {
+            getStats();
+            getNextLevel()();
+          } else {
+            changeLive();
+            getNextLevel()();
+          }
+        }
+      }
+    }
   });
 
   renderPage(gameElement);

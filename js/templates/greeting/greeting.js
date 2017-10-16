@@ -1,4 +1,4 @@
-import {createDomElement, renderPage} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
 import rulesElement from '../rules/rules.js';
 import data from './greeting-data.js';
 

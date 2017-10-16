@@ -1,4 +1,4 @@
-import {createDomElement, renderPage} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
 import introElement from '../intro.js';
 import header from '../header.js';
 

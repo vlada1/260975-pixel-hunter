@@ -1,7 +1,7 @@
 export const initialData = {
   timer: 30,
   lives: 3,
-  stats: [`UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`, `UNKNOWN`],
+  stats: [`unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`],
 };
 
 export const setLives = (data, lives) => {
@@ -13,7 +13,7 @@ export const setLives = (data, lives) => {
 };
 
 export const setStats = (data, stats, num) => {
-  const arrStats = [`SLOW`, `FAST`, `CORRET`, `WRONG`, `UNKNOWN`];
+  const arrStats = [`slow`, `fast`, `correct`, `wrong`, `unknown`];
   if (arrStats.includes(stats) === false) {
     throw new Error(`Value should be: ${arrStats}`);
   }

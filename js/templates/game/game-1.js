@@ -1,4 +1,5 @@
-import {createDomElement, renderPage, getNextLevel, changeLive, getStats, resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
+import {getNextLevel, changeLive, getStats, resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
 import header from './game-header.js';
 import introElement from '../intro.js';
 
@@ -80,6 +81,7 @@ export default (data, statsdata, callback) => {
           getNextLevel()();
         }
       }
+
     }
   });
 
