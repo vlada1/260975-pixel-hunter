@@ -55,11 +55,10 @@ export default (data, statsdata, callback) => {
     if (answer) {
       if (data.answers[0].type === answer) {
         getStats();
-        getNextLevel()();
       } else {
         changeLive();
-        getNextLevel()();
       }
+      getNextLevel();
     }
   });
 

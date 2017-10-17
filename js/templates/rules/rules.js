@@ -25,12 +25,12 @@ backToIntro.addEventListener(`click`, () => {
 });
 
 nameField.addEventListener(`input`, (evt) => {
-  submitRules.disabled = (evt.target.value) ? false : true;
+  submitRules.disabled = (!evt.target.value);
 });
 
 submitRules.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  getNextLevel()();
+  getNextLevel();
 });
 
 export default rulesElement;

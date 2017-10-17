@@ -25,3 +25,49 @@ export const setStats = (data, stats, num) => {
 
   return copiedObject;
 };
+
+export const points = {
+  CORRECT: 100,
+  BONUS: 50,
+  FINE: -50
+};
+
+export const countTotal = (data) => {
+  let correct = 0;
+  let wrong = 0;
+  let livesBonuses = data.lives > 0 ? data.lives : 0;
+  const answers = data.stats;
+
+  for (let i = 0; i < answers.length; i++) {
+    if (answers[i] === `wrong`) {
+      wrong++;
+    }
+    if (answers[i] === `correct`) {
+      correct++;
+    }
+  }
+
+  let isWin = wrong < 4;
+  let total;
+  if (isWin) {
+    total = {
+      isWin,
+      isCorrect: correct,
+      totalPoints: correct * points.CORRECT + livesBonuses * points.BONUS,
+      fastBonuses: 0,
+      livesBonuses: data.lives,
+      slowFine: 0
+    };
+  } else {
+    total = {
+      isWin,
+      isCorrect: 0,
+      totalPoints: 0,
+      fastBonuses: 0,
+      livesBonuses: 0,
+      slowFine: 0
+    };
+  }
+
+  return total;
+};

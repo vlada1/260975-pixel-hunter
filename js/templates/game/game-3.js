@@ -54,11 +54,10 @@ export default (data, statsdata, callback) => {
           let answer = data.answers[i].type;
           if (answer === `paint`) {
             getStats();
-            getNextLevel()();
           } else {
             changeLive();
-            getNextLevel()();
           }
+          getNextLevel();
         }
       }
     }

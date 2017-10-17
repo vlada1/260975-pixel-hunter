@@ -75,13 +75,11 @@ export default (data, statsdata, callback) => {
         if ((data.answers[0].type === answer1)
           && (data.answers[1].type === answer2)) {
           getStats();
-          getNextLevel()();
         } else {
           changeLive();
-          getNextLevel()();
         }
+        getNextLevel();
       }
-
     }
   });
 

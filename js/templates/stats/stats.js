@@ -1,115 +1,78 @@
 import {createDomElement, renderPage} from '../../create-screen.js';
+import {resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
 import introElement from '../intro.js';
 import header from '../header.js';
+import {points, countTotal} from '../../components/game-params.js';
 
-const statsTemplate = `\
-  ${header}
-  <div class="result">
-    <h1>Победа!</h1>
+
+const gameResults = (data) => {
+  const round = countTotal(data);
+
+  const gameResultsTemplate = `\
+    <h1>${round.isWin ? `Победа!` : `FAIL`}</h1>
+
     <table class="result__table">
       <tr>
         <td class="result__number">1.</td>
         <td colspan="2">
           <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--unknown"></li>
+            ${data.stats.map((stats) =>`\
+            <li class="stats__result stats__result--${stats}"></li>`).join(``)}
           </ul>
         </td>
-        <td class="result__points">×&nbsp;100</td>
-        <td class="result__total">900</td>
+        <td class="result__points">${round.isWin ? `×&nbsp;` + points.CORRECT : ``}</td>
+        <td class="result__total">${round.isWin ? round.isCorrect * points.CORRECT : `FAIL`}</td>
       </tr>
+
       <tr>
         <td></td>
         <td class="result__extra">Бонус за скорость:</td>
-        <td class="result__extra">1&nbsp;<span class="stats__result stats__result--fast"></span></td>
-        <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">50</td>
+        <td class="result__extra">${round.fastBonuses}&nbsp;<span class="stats__result stats__result--fast"></span></td>
+        <td class="result__points">×&nbsp;${points.BONUS}</td>
+        <td class="result__total">${round.fastBonuses * points.BONUS}</td>
       </tr>
+
       <tr>
         <td></td>
         <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">2&nbsp;<span class="stats__result stats__result--alive"></span></td>
-        <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">100</td>
+        <td class="result__extra">${round.livesBonuses}&nbsp;<span class="stats__result stats__result--heart"></span></td>
+        <td class="result__points">×&nbsp;${points.BONUS}</td>
+        <td class="result__total">${round.livesBonuses * points.BONUS}</td>
       </tr>
+
       <tr>
         <td></td>
         <td class="result__extra">Штраф за медлительность:</td>
-        <td class="result__extra">2&nbsp;<span class="stats__result stats__result--slow"></span></td>
-        <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">-100</td>
+        <td class="result__extra">${round.slowFine}&nbsp;<span class="stats__result stats__result--slow"></span></td>
+        <td class="result__points">×&nbsp;${points.FINE}</td>
+        <td class="result__total">${round.slowFine * points.FINE}</td>
       </tr>
-      <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
-      </tr>
-    </table>
-    <table class="result__table">
-      <tr>
-        <td class="result__number">2.</td>
-        <td>
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--wrong"></li>
-          </ul>
-        </td>
-        <td class="result__total"></td>
-        <td class="result__total  result__total--final">fail</td>
-      </tr>
-    </table>
-    <table class="result__table">
-      <tr>
-        <td class="result__number">3.</td>
-        <td colspan="2">
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--unknown"></li>
-          </ul>
-        </td>
-        <td class="result__points">×&nbsp;100</td>
-        <td class="result__total">900</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">2&nbsp;<span class="stats__result stats__result--alive"></span></td>
-        <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">100</td>
-      </tr>
-      <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
-      </tr>
-    </table>
-  </div>`;
 
-const statsElement = createDomElement(statsTemplate);
-const backToIntro = statsElement.querySelector(`.back`);
+      <tr>
+        <td colspan="5" class="result__total  result__total--final">${round.totalPoints}</td>
+      </tr>
+    </table>`;
 
-backToIntro.addEventListener(`click`, () => {
-  renderPage(introElement);
-});
+  return gameResultsTemplate;
+};
 
-export default statsElement;
+export default (data) => {
+  const statsTemplate = `\
+    ${header}
+    <div class="result">
+      ${gameResults(data)}
+    </div>`;
+
+  const statsElement = createDomElement(statsTemplate);
+  const backToIntro = statsElement.querySelector(`.back`);
+
+  backToIntro.addEventListener(`click`, () => {
+    resetUserData();
+    resetGameDataValues();
+    resetGameScreen();
+    renderPage(introElement);
+  });
+
+  renderPage(statsElement);
+  return statsElement;
+};

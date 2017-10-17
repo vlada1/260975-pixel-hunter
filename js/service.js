@@ -1,5 +1,4 @@
 import {initialData, setLives, setStats} from './components/game-params.js';
-import {renderPage} from './create-screen.js';
 import gameOne from './templates/game/game-1.js';
 import gameTwo from './templates/game/game-2.js';
 import gameThree from './templates/game/game-3.js';
@@ -26,7 +25,7 @@ export const resetGameScreen = () => {
 export const changeLive = () => {
   userData = setStats(userData, `wrong`, gameScreen - 1);
   if (userData.lives < 1) {
-    renderPage(stats);
+    stats(userData);
   }
   userData = setLives(userData, userData.lives - 1);
 };
@@ -53,26 +52,24 @@ export const livesCount = () => {
 
 export const getNextLevel = () => {
   let currentData = gameDataValues.next().value;
-  return () => {
-    if (!currentData) {
-      renderPage(stats);
+  if (!currentData) {
+    stats(userData);
+    return;
+  }
+  switch (currentData.gameType) {
+    case `gameTypeOne`:
+      gameOne(currentData, userData, livesCount);
+      gameScreen++;
       return;
-    }
-    switch (currentData.gameType) {
-      case `gameTypeOne`:
-        gameOne(currentData, userData, livesCount);
-        gameScreen++;
-        break;
-      case `gameTypeTwo`:
-        gameTwo(currentData, userData, livesCount);
-        gameScreen++;
-        break;
-      case `gameTypeThree`:
-        gameThree(currentData, userData, livesCount);
-        gameScreen++;
-        break;
-      default:
-        return;
-    }
-  };
+    case `gameTypeTwo`:
+      gameTwo(currentData, userData, livesCount);
+      gameScreen++;
+      return;
+    case `gameTypeThree`:
+      gameThree(currentData, userData, livesCount);
+      gameScreen++;
+      return;
+    default:
+      return;
+  }
 };
