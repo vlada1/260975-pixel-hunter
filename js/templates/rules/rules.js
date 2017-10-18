@@ -2,10 +2,8 @@ import {getNextLevel} from '../../service.js';
 import {createDomElement, renderPage} from '../../create-screen.js';
 import introElement from '../intro.js';
 import header from '../header.js';
-import data from './rules-data.js';
 
-const rulesTemplate = `\
-  ${header}
+const content = (data) => `\
   <div class="rules">
     <h1 class="rules__title">${data.title}</h1>
     <p class="rules__description">${data.text}</p>
@@ -15,22 +13,29 @@ const rulesTemplate = `\
     </form>
   </div>`;
 
-const rulesElement = createDomElement(rulesTemplate);
-const backToIntro = rulesElement.querySelector(`.back`);
-const nameField = rulesElement.querySelector(`.rules__input`);
-const submitRules = rulesElement.querySelector(`.rules__button`);
+export default (data) => {
+  const rulesTemplate = `\
+  ${header}
+  ${content(data)}`;
 
-backToIntro.addEventListener(`click`, () => {
-  renderPage(introElement);
-});
+  const rulesElement = createDomElement(rulesTemplate);
+  const backToIntro = rulesElement.querySelector(`.back`);
+  const nameField = rulesElement.querySelector(`.rules__input`);
+  const submitRules = rulesElement.querySelector(`.rules__button`);
 
-nameField.addEventListener(`input`, (evt) => {
-  submitRules.disabled = (!evt.target.value);
-});
+  backToIntro.addEventListener(`click`, () => {
+    renderPage(introElement);
+  });
 
-submitRules.addEventListener(`click`, (evt) => {
-  evt.preventDefault();
-  getNextLevel();
-});
+  nameField.addEventListener(`input`, (evt) => {
+    submitRules.disabled = (!evt.target.value);
+  });
 
-export default rulesElement;
+  submitRules.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    getNextLevel();
+  });
+
+  renderPage(rulesElement);
+  return rulesElement;
+};

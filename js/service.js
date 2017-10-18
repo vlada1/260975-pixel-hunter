@@ -5,10 +5,10 @@ import gameThree from './templates/game/game-3.js';
 import stats from './templates/stats/stats.js';
 import questions from './templates/game/game-data.js';
 
-let userData = JSON.parse(JSON.stringify(initialData));
+let userData = Object.assign({}, initialData);
 
 export const resetUserData = () => {
-  userData = JSON.parse(JSON.stringify(initialData));
+  userData = Object.assign({}, initialData);
 };
 
 let gameDataValues = questions.keys();
@@ -22,12 +22,14 @@ export const resetGameScreen = () => {
   gameScreen = 0;
 };
 
+let isLivesEnd;
 export const changeLive = () => {
   userData = setStats(userData, `wrong`, gameScreen - 1);
-  if (userData.lives < 1) {
-    stats(userData);
+  if (userData.lives > 0) {
+    userData = setLives(userData, userData.lives - 1);
+  } else {
+    isLivesEnd = true;
   }
-  userData = setLives(userData, userData.lives - 1);
 };
 
 export const getStats = () => {
@@ -52,7 +54,7 @@ export const livesCount = () => {
 
 export const getNextLevel = () => {
   let currentData = gameDataValues.next().value;
-  if (!currentData) {
+  if (!currentData || isLivesEnd) {
     stats(userData);
     return;
   }

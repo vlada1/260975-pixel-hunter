@@ -1,8 +1,9 @@
 import {createDomElement, renderPage} from '../../create-screen.js';
 import rulesElement from '../rules/rules.js';
-import data from './greeting-data.js';
+import rulesData from '../rules/rules-data.js';
 
-const greetingTemplate = `\
+
+const content = (data) => `\
   <div class="greeting central--blur">
     <div class="greeting__logo"><img src="${data.logo.src}" width="201" height="89" alt="${data.logo.alt}"></div>
     <h1 class="greeting__asterisk">*</h1>
@@ -13,11 +14,17 @@ const greetingTemplate = `\
     <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
   </div>`;
 
-const greetingElement = createDomElement(greetingTemplate);
-const nextPage = greetingElement.querySelector(`.greeting__continue`);
+export default (data) => {
+  const greetingTemplate = `\
+  ${content(data)}`;
 
-nextPage.addEventListener(`click`, () => {
-  renderPage(rulesElement);
-});
+  const greetingElement = createDomElement(greetingTemplate);
+  const nextPage = greetingElement.querySelector(`.greeting__continue`);
 
-export default greetingElement;
+  nextPage.addEventListener(`click`, () => {
+    rulesElement(rulesData);
+  });
+
+  renderPage(greetingElement);
+  return greetingElement;
+};

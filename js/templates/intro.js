@@ -1,5 +1,6 @@
-import {createDomElement, renderPage} from '../create-screen.js';
+import {createDomElement} from '../create-screen.js';
 import greetingElement from './greeting/greeting.js';
+import data from './greeting/greeting-data.js';
 
 const introTemplate = `\
   <div id="intro" class="intro">
@@ -11,7 +12,7 @@ const introElement = createDomElement(introTemplate);
 const introAsterisk = introElement.querySelector(`.intro__asterisk`);
 
 introAsterisk.addEventListener(`click`, () => {
-  renderPage(greetingElement);
+  greetingElement(data);
 });
 
 export default introElement;

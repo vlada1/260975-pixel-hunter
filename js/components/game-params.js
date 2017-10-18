@@ -20,7 +20,7 @@ export const setStats = (data, stats, num) => {
   const copiedArr = data.stats.slice();
   copiedArr[num] = stats;
 
-  const copiedObject = JSON.parse(JSON.stringify(data));
+  const copiedObject = Object.assign({}, data);
   copiedObject.stats = copiedArr;
 
   return copiedObject;
@@ -32,7 +32,7 @@ export const points = {
   FINE: -50
 };
 
-export const countTotal = (data) => {
+export const countResult = (data) => {
   let correct = 0;
   let wrong = 0;
   let livesBonuses = data.lives > 0 ? data.lives : 0;

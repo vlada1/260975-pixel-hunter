@@ -2,11 +2,11 @@ import {createDomElement, renderPage} from '../../create-screen.js';
 import {resetUserData, resetGameScreen, resetGameDataValues} from '../../service.js';
 import introElement from '../intro.js';
 import header from '../header.js';
-import {points, countTotal} from '../../components/game-params.js';
+import {points, countResult} from '../../components/game-params.js';
 
 
 const gameResults = (data) => {
-  const round = countTotal(data);
+  const round = countResult(data);
 
   const gameResultsTemplate = `\
     <h1>${round.isWin ? `Победа!` : `FAIL`}</h1>
