@@ -1,6 +1,18 @@
-import {answerType, points} from './game-data.js';
+export const answerType = {
+  WRONG: 0,
+  CORRECT: 1,
+  SLOW: 2,
+  FAST: 3,
+  UNKNOWN: 4
+};
 
-const countTotal = ({lives, result}) => {
+export const points = {
+  CORRECT: 100,
+  BONUS: 50,
+  FINE: -50
+};
+
+export const countTotal = ({lives, result}) => {
 
   if (result.length < 10) {
     return -1;
@@ -25,5 +37,3 @@ const countTotal = ({lives, result}) => {
 
   return totalScore;
 };
-
-export default countTotal;

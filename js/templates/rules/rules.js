@@ -1,0 +1,41 @@
+import {getNextLevel} from '../../service.js';
+import {createDomElement, renderPage} from '../../create-screen.js';
+import introElement from '../intro.js';
+import header from '../header.js';
+
+const content = (data) => `\
+  <div class="rules">
+    <h1 class="rules__title">${data.title}</h1>
+    <p class="rules__description">${data.text}</p>
+    <form class="rules__form">
+      <input class="rules__input" type="text" placeholder="${data.placeholder}">
+      <button class="rules__button  continue" type="submit" disabled>${data.buttonText}</button>
+    </form>
+  </div>`;
+
+export default (data) => {
+  const rulesTemplate = `\
+  ${header}
+  ${content(data)}`;
+
+  const rulesElement = createDomElement(rulesTemplate);
+  const backToIntro = rulesElement.querySelector(`.back`);
+  const nameField = rulesElement.querySelector(`.rules__input`);
+  const submitRules = rulesElement.querySelector(`.rules__button`);
+
+  backToIntro.addEventListener(`click`, () => {
+    renderPage(introElement);
+  });
+
+  nameField.addEventListener(`input`, (evt) => {
+    submitRules.disabled = (!evt.target.value);
+  });
+
+  submitRules.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    getNextLevel();
+  });
+
+  renderPage(rulesElement);
+  return rulesElement;
+};
