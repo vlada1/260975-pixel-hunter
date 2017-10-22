@@ -35,6 +35,8 @@ export const points = {
 export const countResult = (data) => {
   let correct = 0;
   let wrong = 0;
+  let fastBonuses = 0;
+  let fines = 0;
   let livesBonuses = data.lives > 0 ? data.lives : 0;
   const answers = data.stats;
 
@@ -45,6 +47,14 @@ export const countResult = (data) => {
     if (answers[i] === `correct`) {
       correct++;
     }
+    if (answers[i] === `fast`) {
+      fastBonuses++;
+      correct++;
+    }
+    if (answers[i] === `slow`) {
+      fines++;
+      correct++;
+    }
   }
 
   let isWin = wrong < 4;
@@ -53,10 +63,10 @@ export const countResult = (data) => {
     total = {
       isWin,
       isCorrect: correct,
-      totalPoints: correct * points.CORRECT + livesBonuses * points.BONUS,
-      fastBonuses: 0,
+      totalPoints: correct * points.CORRECT + (livesBonuses + fastBonuses) * points.BONUS + fines * points.FINE,
+      fastBonuses,
       livesBonuses: data.lives,
-      slowFine: 0
+      slowFine: fines
     };
   } else {
     total = {
