@@ -7,9 +7,9 @@ class GameThreeScreen {
 
   init(data, statsdata, callback) {
     this.view = new GameThreeView(data, statsdata, callback);
-    this.timer = new Timer(statsdata.timer, this.view.element.querySelector(`.game__timer`), timerCallback);
+    this.timer = new Timer(statsdata.timer);
     renderPage(this.view.element);
-    this.timer.start();
+    this.timer.start(this.view.element.querySelector(`.game__timer`), timerCallback);
 
     this.view.onBackButtonClick = () => {
       this.timer.stop();
@@ -22,12 +22,11 @@ class GameThreeScreen {
     this.view.onAnswerClick = (userAnswer) => {
       const {answer} = userAnswer;
       if (answer === `paint`) {
-        this.timer.stop();
         getStats(this.timer.getTime());
       } else {
-        this.timer.stop();
         changeLive();
       }
+      this.timer.stop();
       Application.getNextLevel();
     };
   }

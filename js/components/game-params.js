@@ -41,19 +41,21 @@ export const countResult = (data) => {
   const answers = data.stats;
 
   for (let i = 0; i < answers.length; i++) {
-    if (answers[i] === `wrong`) {
-      wrong++;
-    }
-    if (answers[i] === `correct`) {
-      correct++;
-    }
-    if (answers[i] === `fast`) {
-      fastBonuses++;
-      correct++;
-    }
-    if (answers[i] === `slow`) {
-      fines++;
-      correct++;
+    switch (answers[i]) {
+      case `wrong`:
+        wrong++;
+        break;
+      case `correct`:
+        correct++;
+        break;
+      case `fast`:
+        fastBonuses++;
+        correct++;
+        break;
+      case `slow`:
+        fines++;
+        correct++;
+        break;
     }
   }
 

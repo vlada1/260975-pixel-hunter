@@ -84,6 +84,7 @@ export class Application {
     let currentData = gameDataValues.next().value;
     if (!currentData || isLivesEnd) {
       StatsView.init(userData);
+      isLivesEnd = false;
       return;
     }
     switch (currentData.gameType) {

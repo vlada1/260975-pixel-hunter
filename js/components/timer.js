@@ -1,30 +1,29 @@
 class Timer {
-  constructor(sec, element, callback) {
+  constructor(sec) {
     if (sec < 0) {
       throw new Error(`Time can't be less then 0`);
     }
     this.currentTime = sec;
-    this.element = element;
-    this.callback = callback;
   }
 
   getTime() {
     return this.currentTime;
   }
 
-  start() {
+  start(element, callback) {
 
     const _tick = () => {
-      this.element.innerHTML = this.currentTime;
+      element.innerHTML = this.currentTime;
       this.currentTime--;
 
       if (this.currentTime <= 0) {
-        if (this.callback !== null) {
-          this.callback();
+        if (callback !== null) {
+          callback();
         }
       } else {
         this.timeoutId = setTimeout(_tick, 1000);
       }
+      return this.currentTime;
     };
     _tick();
   }

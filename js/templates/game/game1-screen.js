@@ -7,9 +7,9 @@ class GameOneScreen {
 
   init(data, statsdata, callback) {
     this.view = new GameOneView(data, statsdata, callback);
-    this.timer = new Timer(statsdata.timer, this.view.element.querySelector(`.game__timer`), timerCallback);
+    this.timer = new Timer(statsdata.timer);
     renderPage(this.view.element);
-    this.timer.start();
+    this.timer.start(this.view.element.querySelector(`.game__timer`), timerCallback);
 
     this.view.onBackButtonClick = () => {
       this.timer.stop();
@@ -25,12 +25,11 @@ class GameOneScreen {
 
         if ((data.answers[0].type === answer1)
           && (data.answers[1].type === answer2)) {
-          this.timer.stop();
           getStats(this.timer.getTime());
         } else {
-          this.timer.stop();
           changeLive();
         }
+        this.timer.stop();
         Application.getNextLevel();
       }
     };
