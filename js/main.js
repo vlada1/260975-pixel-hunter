@@ -1,4 +1,3 @@
-import introElement from './templates/intro.js';
-import {renderPage} from './create-screen.js';
+import {Application} from './service';
 
-renderPage(introElement);
+Application.showIntro();

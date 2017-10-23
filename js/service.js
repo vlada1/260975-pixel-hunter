@@ -1,9 +1,12 @@
-import {initialData, setLives, setStats} from './components/game-params.js';
-import gameOne from './templates/game/game-1.js';
-import gameTwo from './templates/game/game-2.js';
-import gameThree from './templates/game/game-3.js';
-import stats from './templates/stats/stats.js';
-import questions from './templates/game/game-data.js';
+import {initialData, setLives, setStats} from './components/game-params';
+import GameOneView from './templates/game/game1-screen';
+import GameTwoView from './templates/game/game2-screen';
+import GameThreeView from './templates/game/game3-screen';
+import IntroView from './templates/intro/intro-screen';
+import GreetingView from './templates/greeting/greeting-screen';
+import RulesView from './templates/rules/rules-screen';
+import StatsView from './templates/stats/stats-screen';
+import questions from './templates/game/game-data';
 
 let userData = Object.assign({}, initialData);
 
@@ -32,8 +35,14 @@ export const changeLive = () => {
   }
 };
 
-export const getStats = () => {
-  userData = setStats(userData, `correct`, gameScreen - 1);
+export const getStats = (time) => {
+  if (time > 20) {
+    userData = setStats(userData, `fast`, gameScreen - 1);
+  } else if (time < 10) {
+    userData = setStats(userData, `slow`, gameScreen - 1);
+  } else {
+    userData = setStats(userData, `correct`, gameScreen - 1);
+  }
 };
 
 export const livesCount = () => {
@@ -52,26 +61,47 @@ export const livesCount = () => {
   return hearts;
 };
 
-export const getNextLevel = () => {
-  let currentData = gameDataValues.next().value;
-  if (!currentData || isLivesEnd) {
-    stats(userData);
-    return;
-  }
-  switch (currentData.gameType) {
-    case `gameTypeOne`:
-      gameOne(currentData, userData, livesCount);
-      gameScreen++;
-      return;
-    case `gameTypeTwo`:
-      gameTwo(currentData, userData, livesCount);
-      gameScreen++;
-      return;
-    case `gameTypeThree`:
-      gameThree(currentData, userData, livesCount);
-      gameScreen++;
-      return;
-    default:
-      return;
-  }
+export const timerCallback = () => {
+  changeLive();
+  Application.getNextLevel();
 };
+
+export class Application {
+
+  static showIntro() {
+    IntroView.init();
+  }
+
+  static showGreeting() {
+    GreetingView.init();
+  }
+
+  static showRules() {
+    RulesView.init();
+  }
+
+  static getNextLevel() {
+    let currentData = gameDataValues.next().value;
+    if (!currentData || isLivesEnd) {
+      StatsView.init(userData);
+      isLivesEnd = false;
+      return;
+    }
+    switch (currentData.gameType) {
+      case `gameTypeOne`:
+        GameOneView.init(currentData, userData, livesCount);
+        gameScreen++;
+        return;
+      case `gameTypeTwo`:
+        GameTwoView.init(currentData, userData, livesCount);
+        gameScreen++;
+        return;
+      case `gameTypeThree`:
+        GameThreeView.init(currentData, userData, livesCount);
+        gameScreen++;
+        return;
+      default:
+        return;
+    }
+  }
+}

@@ -10,16 +10,29 @@ class Timer {
     return this.currentTime;
   }
 
-  tick() {
-    if (this.currentTime === 0) {
-      return `Time is up`;
-    }
+  start(element, callback) {
 
-    if (this.currentTime > 0) {
+    const _tick = () => {
+      element.innerHTML = this.currentTime;
       this.currentTime--;
-    }
 
-    return this.currentTime;
+      if (this.currentTime <= 0) {
+        if (callback !== null) {
+          callback();
+        }
+      } else {
+        this.timeoutId = setTimeout(_tick, 1000);
+      }
+      return this.currentTime;
+    };
+    _tick();
+  }
+
+  stop() {
+    if (this.timeoutId !== null) {
+      clearTimeout(this.timeoutId);
+    }
+    this.callback = null;
   }
 }
 
