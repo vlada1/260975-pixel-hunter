@@ -17,7 +17,7 @@ class Timer {
       this.currentTime--;
 
       if (this.currentTime <= 0) {
-        if (callback !== null) {
+        if (callback) {
           callback();
         }
       } else {

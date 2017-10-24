@@ -80,10 +80,14 @@ export class Application {
     RulesView.init();
   }
 
+  static showStats() {
+    StatsView.init(userData);
+  }
+
   static getNextLevel() {
     let currentData = gameDataValues.next().value;
     if (!currentData || isLivesEnd) {
-      StatsView.init(userData);
+      this.showStats();
       isLivesEnd = false;
       return;
     }
