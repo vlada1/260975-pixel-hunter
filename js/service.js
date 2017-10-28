@@ -83,18 +83,13 @@ const routes = {
   [ControllerId.STATS]: StatsView
 };
 
-const saveState = (state) => {
-  return JSON.stringify(state);
-};
-
 export class Application {
 
   static init() {
     const hashChangeHandler = (event) => {
       let old;
       if (event) {
-        old = event.oldURL;
-        old = old.slice(old.indexOf(`#`));
+        old = event.oldURL.slice(event.oldURL.indexOf(`#`));
       }
       const hashValue = location.hash.replace(`#`, ``);
       Application.changeHash(hashValue, old);
@@ -107,15 +102,16 @@ export class Application {
   static changeHash(id, old) {
     const controller = routes[id];
     if (controller) {
+      resetUserData();
       resetGameScreen();
       resetGameDataValues();
-      if (id === `stats`) {
-        this.showStats();
+      if (id === ControllerId.STATS) {
+        StatsView.init(userData);
       } else {
         controller.init();
       }
-    } else if (old && id !== `game`) {
-      location.hash = old.slice(old.indexOf(`#`));
+    } else if (old && id !== ControllerId.GAME) {
+      location.hash = old;
     }
   }
 
@@ -136,7 +132,7 @@ export class Application {
 
   static showStats() {
     StatsView.init(userData);
-    location.hash = `${ControllerId.STATS}?${saveState(userData)}`;
+    location.hash = ControllerId.STATS;
   }
 
   static getNextLevel() {
