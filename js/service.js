@@ -72,6 +72,7 @@ const ControllerId = {
   INTRO: `intro`,
   WELCOME: `greeting`,
   RULES: `rules`,
+  GAME: `game`,
   STATS: `stats`
 };
 
@@ -89,14 +90,21 @@ const saveState = (state) => {
 export class Application {
 
   static init() {
-    const hashChangeHandler = () => {
+    const hashChangeHandler = (event) => {
+      let old;
+      if (event) {
+        old = event.oldURL;
+        old = old.slice(old.indexOf(`#`));
+      }
       const hashValue = location.hash.replace(`#`, ``);
-      Application.changeHash(hashValue);
+      Application.changeHash(hashValue, old);
+
     };
     window.onhashchange = hashChangeHandler;
+    hashChangeHandler();
   }
 
-  static changeHash(id) {
+  static changeHash(id, old) {
     const controller = routes[id];
     if (controller) {
       resetGameScreen();
@@ -106,6 +114,8 @@ export class Application {
       } else {
         controller.init();
       }
+    } else if (old && id !== `game`) {
+      location.hash = old.slice(old.indexOf(`#`));
     }
   }
 
@@ -139,17 +149,17 @@ export class Application {
     switch (currentData.gameType) {
       case `gameTypeOne`:
         GameOneView.init(currentData, userData, livesCount);
-        location.hash = `game1`;
+        location.hash = ControllerId.GAME;
         gameScreen++;
         return;
       case `gameTypeTwo`:
         GameTwoView.init(currentData, userData, livesCount);
-        location.hash = `game2`;
+        location.hash = ControllerId.GAME;
         gameScreen++;
         return;
       case `gameTypeThree`:
         GameThreeView.init(currentData, userData, livesCount);
-        location.hash = `game3`;
+        location.hash = ControllerId.GAME;
         gameScreen++;
         return;
       default:
