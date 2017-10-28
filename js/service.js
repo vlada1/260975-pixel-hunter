@@ -103,16 +103,15 @@ export class Application {
   static init() {
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
-      Application.changeHash(hashValue);
+      Application.changeHash(id);
     };
     window.onhashchange = hashChangeHandler;
-    hashChangeHandler();
   }
 
-  static changeHash(id, state) {
+  static changeHash(id) {
     const controller = Application.routes[id];
     if (controller) {
-      controller.init(loadState(state));
+      controller.init();
     }
   }
 
