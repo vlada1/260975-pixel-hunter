@@ -72,30 +72,18 @@ const ControllerId = {
   INTRO: `intro`,
   WELCOME: `greeting`,
   RULES: `rules`,
-  GAME: `game`,
-  RESULT: `result`
+  STATS: `stats`
 };
 
 const routes = {
-  INTRO: IntroView,
-  GREETING: GreetingView,
-  RULES: RulesView,
-  GAME_ONE: GameOneView,
-  GAME_TWO: GameTwoView,
-  GAME_THREE: GameThreeView,
-  STATS: StatsView
+  [ControllerId.INTRO]: IntroView,
+  [ControllerId.WELCOME]: GreetingView,
+  [ControllerId.RULES]: RulesView,
+  [ControllerId.STATS]: StatsView
 };
 
 const saveState = (state) => {
   return JSON.stringify(state);
-};
-
-const loadState = (dataString) => {
-  try {
-    return JSON.parse(dataString);
-  } catch (e) {
-    return initialData;
-  }
 };
 
 export class Application {
@@ -103,38 +91,39 @@ export class Application {
   static init() {
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
-      const [id, data] = hashValue.split(`?`);
-      Application.changeHash(id, data);
+      Application.changeHash(hashValue);
     };
     window.onhashchange = hashChangeHandler;
-    hashChangeHandler();
   }
 
-  static changeHash(id, state) {
-    const controller = Application.routes[id];
+  static changeHash(id) {
+    const controller = routes[id];
     if (controller) {
-      controller.init(loadState(state));
+      resetGameScreen();
+      resetUserData();
+      resetGameDataValues();
+      controller.init();
     }
   }
 
   static showIntro() {
-    routes[`INTRO`].init();
+    IntroView.init();
     location.hash = ControllerId.INTRO;
   }
 
   static showGreeting() {
-    routes[`GREETING`].init();
+    GreetingView.init();
     location.hash = ControllerId.WELCOME;
   }
 
   static showRules() {
-    routes[`RULES`].init();
+    RulesView.init();
     location.hash = ControllerId.RULES;
   }
 
   static showStats() {
-    routes[`STATS`].init(userData);
-    location.hash = `${ControllerId.RESULT}?${saveState(userData)}`;
+    StatsView.init(userData);
+    location.hash = `${ControllerId.STATS}?${saveState(userData)}`;
   }
 
   static getNextLevel() {
@@ -146,18 +135,18 @@ export class Application {
     }
     switch (currentData.gameType) {
       case `gameTypeOne`:
-        routes[`GAME_ONE`].init(currentData, userData, livesCount);
-        location.hash = `${ControllerId.GAME}1`;
+        GameOneView.init(currentData, userData, livesCount);
+        location.hash = ``;
         gameScreen++;
         return;
       case `gameTypeTwo`:
-        routes[`GAME_TWO`].init(currentData, userData, livesCount);
-        location.hash = `${ControllerId.GAME}2`;
+        GameTwoView.init(currentData, userData, livesCount);
+        location.hash = ``;
         gameScreen++;
         return;
       case `gameTypeThree`:
-        routes[`GAME_THREE`].init(currentData, userData, livesCount);
-        location.hash = `${ControllerId.GAME}3`;
+        GameThreeView.init(currentData, userData, livesCount);
+        location.hash = ``;
         gameScreen++;
         return;
       default:
@@ -165,3 +154,5 @@ export class Application {
     }
   }
 }
+
+Application.init();
