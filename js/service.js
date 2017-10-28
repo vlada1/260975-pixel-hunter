@@ -66,22 +66,74 @@ export const timerCallback = () => {
   Application.getNextLevel();
 };
 
+// Application
+
+const ControllerId = {
+  INTRO: `intro`,
+  WELCOME: `greeting`,
+  RULES: `rules`,
+  GAME: `game`,
+  RESULT: `result`
+};
+
+const routes = {
+  INTRO: IntroView,
+  GREETING: GreetingView,
+  RULES: RulesView,
+  GAME_ONE: GameOneView,
+  GAME_TWO: GameTwoView,
+  GAME_THREE: GameThreeView,
+  STATS: StatsView
+};
+
+const saveState = (state) => {
+  return JSON.stringify(state);
+};
+
+const loadState = (dataString) => {
+  try {
+    return JSON.parse(dataString);
+  } catch (e) {
+    return initialData;
+  }
+};
+
 export class Application {
 
+  static init() {
+    const hashChangeHandler = () => {
+      const hashValue = location.hash.replace(`#`, ``);
+      Application.changeHash(hashValue);
+    };
+    window.onhashchange = hashChangeHandler;
+    hashChangeHandler();
+  }
+
+  static changeHash(id, state) {
+    const controller = Application.routes[id];
+    if (controller) {
+      controller.init(loadState(state));
+    }
+  }
+
   static showIntro() {
-    IntroView.init();
+    routes[`INTRO`].init();
+    location.hash = ControllerId.INTRO;
   }
 
   static showGreeting() {
-    GreetingView.init();
+    routes[`GREETING`].init();
+    location.hash = ControllerId.WELCOME;
   }
 
   static showRules() {
-    RulesView.init();
+    routes[`RULES`].init();
+    location.hash = ControllerId.RULES;
   }
 
   static showStats() {
-    StatsView.init(userData);
+    routes[`STATS`].init(userData);
+    location.hash = `${ControllerId.RESULT}?${saveState(userData)}`;
   }
 
   static getNextLevel() {
@@ -93,15 +145,18 @@ export class Application {
     }
     switch (currentData.gameType) {
       case `gameTypeOne`:
-        GameOneView.init(currentData, userData, livesCount);
+        routes[`GAME_ONE`].init(currentData, userData, livesCount);
+        location.hash = `${ControllerId.GAME}1`;
         gameScreen++;
         return;
       case `gameTypeTwo`:
-        GameTwoView.init(currentData, userData, livesCount);
+        routes[`GAME_TWO`].init(currentData, userData, livesCount);
+        location.hash = `${ControllerId.GAME}2`;
         gameScreen++;
         return;
       case `gameTypeThree`:
-        GameThreeView.init(currentData, userData, livesCount);
+        routes[`GAME_THREE`].init(currentData, userData, livesCount);
+        location.hash = `${ControllerId.GAME}3`;
         gameScreen++;
         return;
       default:
