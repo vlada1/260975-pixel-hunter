@@ -100,9 +100,12 @@ export class Application {
     const controller = routes[id];
     if (controller) {
       resetGameScreen();
-      resetUserData();
       resetGameDataValues();
-      controller.init();
+      if (id === `stats`) {
+        this.showStats();
+      } else {
+        controller.init();
+      }
     }
   }
 
@@ -136,17 +139,17 @@ export class Application {
     switch (currentData.gameType) {
       case `gameTypeOne`:
         GameOneView.init(currentData, userData, livesCount);
-        location.hash = ``;
+        location.hash = `game1`;
         gameScreen++;
         return;
       case `gameTypeTwo`:
         GameTwoView.init(currentData, userData, livesCount);
-        location.hash = ``;
+        location.hash = `game2`;
         gameScreen++;
         return;
       case `gameTypeThree`:
         GameThreeView.init(currentData, userData, livesCount);
-        location.hash = ``;
+        location.hash = `game3`;
         gameScreen++;
         return;
       default:
@@ -154,5 +157,3 @@ export class Application {
     }
   }
 }
-
-Application.init();
