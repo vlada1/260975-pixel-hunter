@@ -44,12 +44,12 @@ class GameThreeView extends AbstractView {
       this.onBackButtonClick();
     });
 
-    for (let i = 0; i < gameOptionArr.length; i++) {
-      gameOptionArr[i].addEventListener(`click`, () => {
-        let answer = this.data.answers[i].type;
+    gameOptionArr.forEach(function(option, i) {
+      option.addEventListener(`click`, () => {
+        const answer = this.data.answers[i].type;
         this.onAnswerClick({answer});
       });
-    }
+    }, this);
   }
 
   onBackButtonClick() {
