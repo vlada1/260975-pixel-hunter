@@ -13,16 +13,16 @@ class GameThreeView extends AbstractView {
     return `\
     ${header(this.callback)}
     <div class="game">
-    <p class="game__task">${this.data.text}</p>
+    <p class="game__task">${this.data.question}</p>
     <form class="game__content  game__content--triple">
       <div class="game__option">
-        <img src="${this.data.answers[0].src}" alt="Option 1" width="304" height="455">
+        <img src="${this.data.answers[0].image.url}" alt="Option 1" width="304" height="455">
       </div>
       <div class="game__option">
-        <img src="${this.data.answers[1].src}" alt="Option 1" width="304" height="455">
+        <img src="${this.data.answers[1].image.url}" alt="Option 1" width="304" height="455">
       </div>
       <div class="game__option">
-        <img src="${this.data.answers[2].src}" alt="Option 1" width="304" height="455">
+        <img src="${this.data.answers[2].image.url}" alt="Option 1" width="304" height="455">
       </div>
     </form>
     <div class="stats">
@@ -44,18 +44,12 @@ class GameThreeView extends AbstractView {
       this.onBackButtonClick();
     });
 
-    gameContent.addEventListener(`click`, (evt) => {
-      if (evt.target.classList.contains(`game__option`)) {
-        (evt.target.classList.add(`game__option--selected`));
-
-        for (let i = 0; i < gameOptionArr.length; i++) {
-          if (gameOptionArr[i].classList.contains(`game__option--selected`)) {
-            let answer = this.data.answers[i].type;
-            this.onAnswerClick({answer});
-          }
-        }
-      }
-    });
+    gameOptionArr.forEach(function (option, i) {
+      option.addEventListener(`click`, () => {
+        const answer = this.data.answers[i].type;
+        this.onAnswerClick({answer});
+      });
+    }, this);
   }
 
   onBackButtonClick() {

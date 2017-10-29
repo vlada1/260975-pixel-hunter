@@ -1,6 +1,6 @@
 import RulesView from './rules-view';
 import {renderPage} from '../../create-screen';
-import {resetUserData, resetGameScreen, resetGameDataValues, Application} from '../../service';
+import {resetUserData, resetGameScreen, Application} from '../../service';
 
 class RulesScreen {
   constructor() {
@@ -12,7 +12,7 @@ class RulesScreen {
 
     this.view.onBackButtonClick = () => {
       resetUserData();
-      resetGameDataValues();
+      Application.resetGameDataValues();
       resetGameScreen();
       Application.showGreeting();
     };
