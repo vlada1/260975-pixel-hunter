@@ -13,16 +13,16 @@ class GameTwoView extends AbstractView {
     return `\
     ${header(this.callback)}
     <div class="game">
-    <p class="game__task">${this.data.text}</p>
+    <p class="game__task">${this.data.question}</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${this.data.answers[0].src}" alt="Option 1" width="705" height="455">
+        <img src="${this.data.answers[0].image.url}" alt="Option 1" width="705" height="455">
         <label class="game__answer  game__answer--photo">
           <input name="question1" type="radio" value="photo">
           <span>Фото</span>
         </label>
         <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
+          <input name="question1" type="radio" value="painting">
           <span>Рисунок</span>
         </label>
       </div>

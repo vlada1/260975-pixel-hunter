@@ -1,6 +1,6 @@
 import StatsView from './stats-view';
 import {renderPage} from '../../create-screen';
-import {resetUserData, resetGameScreen, resetGameDataValues, Application} from '../../service';
+import {resetUserData, resetGameScreen, Application} from '../../service';
 
 class StatsScreen {
 
@@ -10,9 +10,9 @@ class StatsScreen {
 
     this.view.onBackButtonClicked = () => {
       resetUserData();
-      resetGameDataValues();
+      Application.resetGameDataValues();
       resetGameScreen();
-      Application.showIntro();
+      Application.showGreeting();
     };
   }
 }

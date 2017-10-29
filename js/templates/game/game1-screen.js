@@ -1,6 +1,6 @@
 import GameOneView from './game1-view';
 import {renderPage} from '../../create-screen';
-import {changeLive, getStats, resetUserData, resetGameScreen, resetGameDataValues, timerCallback, Application} from '../../service';
+import {changeLive, getStats, resetUserData, resetGameScreen, timerCallback, Application} from '../../service';
 import Timer from '../../components/timer';
 
 class GameOneScreen {
@@ -14,7 +14,7 @@ class GameOneScreen {
     this.view.onBackButtonClick = () => {
       this.timer.stop();
       resetUserData();
-      resetGameDataValues();
+      Application.resetGameDataValues();
       resetGameScreen();
       Application.showGreeting();
     };

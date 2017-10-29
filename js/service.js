@@ -6,7 +6,7 @@ import IntroView from './templates/intro/intro-screen';
 import GreetingView from './templates/greeting/greeting-screen';
 import RulesView from './templates/rules/rules-screen';
 import StatsView from './templates/stats/stats-screen';
-import questions from './templates/game/game-data';
+import Loader from './loader';
 
 let userData = Object.assign({}, initialData);
 
@@ -14,12 +14,7 @@ export const resetUserData = () => {
   userData = Object.assign({}, initialData);
 };
 
-let gameDataValues = questions.keys();
 let gameScreen = 0;
-
-export const resetGameDataValues = () => {
-  gameDataValues = questions.keys();
-};
 
 export const resetGameScreen = () => {
   gameScreen = 0;
@@ -83,6 +78,10 @@ const routes = {
   [ControllerId.STATS]: StatsView
 };
 
+export const saveState = (state) => {
+  return JSON.stringify(state);
+};
+
 export class Application {
 
   static init() {
@@ -96,7 +95,7 @@ export class Application {
 
     };
     window.onhashchange = hashChangeHandler;
-    hashChangeHandler();
+    this.startGame();
   }
 
   static changeHash(id, old) {
@@ -104,14 +103,16 @@ export class Application {
     if (controller) {
       resetUserData();
       resetGameScreen();
-      resetGameDataValues();
+      Application.resetGameDataValues();
       if (id === ControllerId.STATS) {
-        StatsView.init(userData);
+        this.showStats();
       } else {
         controller.init();
       }
-    } else if (old && id !== ControllerId.GAME) {
-      location.hash = old;
+    } else if (old) {
+      if (id.indexOf(`stats`) === -1 && id !== ControllerId.GAME) {
+        location.hash = old;
+      }
     }
   }
 
@@ -131,29 +132,47 @@ export class Application {
   }
 
   static showStats() {
+    location.hash = `${ControllerId.STATS}?${saveState(userData)}`;
     StatsView.init(userData);
-    location.hash = ControllerId.STATS;
+  }
+
+  static async loadAllGameData() {
+    this.data = await Loader.loadData();
+  }
+
+  static async startGame() {
+    if (!this.data) {
+      this.showIntro();
+      await this.loadAllGameData();
+    }
+    this.showGreeting();
+  }
+
+  static resetGameDataValues() {
+    if (this.data) {
+      this._gameDataValues = this.data;
+    }
   }
 
   static getNextLevel() {
-    let currentData = gameDataValues.next().value;
+    let currentData = this._gameDataValues[gameScreen];
     if (!currentData || isLivesEnd) {
       this.showStats();
       isLivesEnd = false;
       return;
     }
-    switch (currentData.gameType) {
-      case `gameTypeOne`:
+    switch (currentData.type) {
+      case `two-of-two`:
         GameOneView.init(currentData, userData, livesCount);
         location.hash = ControllerId.GAME;
         gameScreen++;
         return;
-      case `gameTypeTwo`:
+      case `tinder-like`:
         GameTwoView.init(currentData, userData, livesCount);
         location.hash = ControllerId.GAME;
         gameScreen++;
         return;
-      case `gameTypeThree`:
+      case `one-of-three`:
         GameThreeView.init(currentData, userData, livesCount);
         location.hash = ControllerId.GAME;
         gameScreen++;
