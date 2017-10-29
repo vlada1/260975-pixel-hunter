@@ -44,7 +44,7 @@ class GameThreeView extends AbstractView {
       this.onBackButtonClick();
     });
 
-    gameOptionArr.forEach(function(option, i) {
+    gameOptionArr.forEach(function (option, i) {
       option.addEventListener(`click`, () => {
         const answer = this.data.answers[i].type;
         this.onAnswerClick({answer});
