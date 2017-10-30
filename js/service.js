@@ -1,4 +1,4 @@
-import {initialData, setLives, setStats} from './components/game-params';
+import {initialData, setLives, setStats, setName} from './components/game-params';
 import GameOneView from './templates/game/game1-screen';
 import GameTwoView from './templates/game/game2-screen';
 import GameThreeView from './templates/game/game3-screen';
@@ -18,6 +18,12 @@ let gameScreen = 0;
 
 export const resetGameScreen = () => {
   gameScreen = 0;
+};
+
+export const changeName = (name) => {
+  if (name) {
+    userData = setName(userData, name);
+  }
 };
 
 let isLivesEnd;
@@ -133,7 +139,7 @@ export class Application {
 
   static showStats() {
     location.hash = `${ControllerId.STATS}?${saveState(userData)}`;
-    StatsView.init(userData);
+    StatsView.init(userData.name);
   }
 
   static async loadAllGameData() {
@@ -154,9 +160,10 @@ export class Application {
     }
   }
 
-  static getNextLevel() {
+  static async getNextLevel() {
     let currentData = this._gameDataValues[gameScreen];
     if (!currentData || isLivesEnd) {
+      await Loader.sendResults(userData);
       this.showStats();
       isLivesEnd = false;
       return;
