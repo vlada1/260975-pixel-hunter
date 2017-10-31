@@ -19,11 +19,12 @@ class RulesScreen {
 
     this.view.onNameFieldInput = (evt, submitRules) => {
       submitRules.disabled = (!evt.target.value);
-      changeName(evt.target.value.toLowerCase());
+      this.name = evt.target.value;
     };
 
     this.view.onFormSubmit = (evt) => {
       evt.preventDefault();
+      changeName(this.name);
       Application.getNextLevel();
     };
   }

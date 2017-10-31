@@ -21,9 +21,7 @@ export const resetGameScreen = () => {
 };
 
 export const changeName = (name) => {
-  if (name) {
-    userData = setName(userData, name);
-  }
+  userData = setName(userData, name);
 };
 
 let isLivesEnd;
