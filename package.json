@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "autoprefixer": "6.7.7",
+    "babel-es6-polyfill": "^1.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "6.26.0",
@@ -30,7 +31,8 @@
     "gulp-sass": "3.1.0",
     "gulp-sourcemaps": "2.6.1",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "engines": {
     "node": "6.11.3"
@@ -41,8 +43,7 @@
     ]
   },
   "dependencies": {
-    "babel-es6-polyfill": "^1.1.0",
-    "rollup-plugin-babel": "^3.0.2",
-    "whatwg-fetch": "^2.0.3"
+    "babel-polyfill": "^6.26.0",
+    "rollup-plugin-babel": "^3.0.2"
   }
 }
