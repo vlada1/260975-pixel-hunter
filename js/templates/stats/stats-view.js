@@ -8,8 +8,12 @@ class StatsView extends AbstractView {
     this.data = data;
   }
 
+  get reversedData() {
+    return this.data.slice(0).reverse();
+  }
+
   get result() {
-    return this.data.map(function (round) {
+    return this.reversedData.map(function (round) {
       return countResult(round);
     });
   }
@@ -83,7 +87,7 @@ class StatsView extends AbstractView {
     return `\
       ${header}
       <div class="result">
-        ${this.result.map((round, index) => !round.isWin ? this.loseStats(this.data[index], index + 1) : this.winStats(this.data[index], round, index + 1)).join(``)}
+        ${this.result.map((round, index) => !round.isWin ? this.loseStats(this.reversedData[index], index + 1) : this.winStats(this.reversedData[index], round, index + 1)).join(``)}
       </div>`;
   }
 
