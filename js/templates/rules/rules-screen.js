@@ -1,6 +1,6 @@
 import RulesView from './rules-view';
 import {renderPage} from '../../create-screen';
-import {resetUserData, resetGameScreen, Application} from '../../service';
+import {resetUserData, resetGameScreen, changeName, Application} from '../../service';
 
 class RulesScreen {
   constructor() {
@@ -19,10 +19,12 @@ class RulesScreen {
 
     this.view.onNameFieldInput = (evt, submitRules) => {
       submitRules.disabled = (!evt.target.value);
+      this.name = evt.target.value;
     };
 
     this.view.onFormSubmit = (evt) => {
       evt.preventDefault();
+      changeName(this.name);
       Application.getNextLevel();
     };
   }

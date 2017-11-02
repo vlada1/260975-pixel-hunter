@@ -1,4 +1,5 @@
 export const initialData = {
+  name: `default`,
   timer: 30,
   lives: 3,
   stats: [`unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`, `unknown`],
@@ -22,8 +23,11 @@ export const setStats = (data, stats, num) => {
 
   const copiedObject = Object.assign({}, data);
   copiedObject.stats = copiedArr;
-
   return copiedObject;
+};
+
+export const setName = (data, name) => {
+  return Object.assign({}, data, {name});
 };
 
 export const points = {
