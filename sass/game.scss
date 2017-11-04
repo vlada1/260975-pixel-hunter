@@ -15,6 +15,13 @@
   top: 25px;
   left: 50%;
   transform: translateX(-50%);
+
+  &--flash {
+    animation-name: blinkTimer;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    color: red;
+  }
 }
 
 .game__lives {

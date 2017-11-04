@@ -44,8 +44,8 @@ export const countResult = (data) => {
   let livesBonuses = data.lives > 0 ? data.lives : 0;
   const answers = data.stats;
 
-  for (let i = 0; i < answers.length; i++) {
-    switch (answers[i]) {
+  answers.forEach(function (answer) {
+    switch (answer) {
       case `wrong`:
         wrong++;
         break;
@@ -61,7 +61,7 @@ export const countResult = (data) => {
         correct++;
         break;
     }
-  }
+  });
 
   let isWin = wrong < 4;
   let total;

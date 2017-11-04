@@ -1,3 +1,6 @@
+rules:
+  no-alert: 0
+
 parserOptions:
   sourceType: 'module'
   ecmaVersion: 2017

@@ -56,7 +56,7 @@ gulp.task('scripts', function () {
     .pipe(sourcemaps.init())
     .pipe(rollup({
       plugins: [
-        resolve(),
+        resolve({ jsnext: true, main: true }),
         commonjs(),
         babel({
           babelrc: false,

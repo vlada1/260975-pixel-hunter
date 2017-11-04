@@ -15,6 +15,9 @@ class Timer {
     const _tick = () => {
       element.innerHTML = this.currentTime;
       this.currentTime--;
+      if (this.currentTime < 5) {
+        element.classList.add(`game__timer--flash`);
+      }
 
       if (this.currentTime <= 0) {
         if (callback) {

@@ -12,11 +12,14 @@ class GameThreeScreen {
     this.timer.start(this.view.element.querySelector(`.game__timer`), timerCallback);
 
     this.view.onBackButtonClick = () => {
-      this.timer.stop();
-      resetUserData();
-      Application.resetGameDataValues();
-      resetGameScreen();
-      Application.showGreeting();
+      const isConfirm = confirm(`Результат игры не сохраняется! Согласны?`);
+      if (isConfirm) {
+        this.timer.stop();
+        resetUserData();
+        Application.resetGameDataValues();
+        resetGameScreen();
+        Application.showGreeting();
+      }
     };
 
     this.view.onAnswerClick = (userAnswer) => {
