@@ -1,5 +1,6 @@
 import header from './game-header';
 import AbstractView from '../abstractView';
+import resizeImages from './resizeImages';
 
 class GameOneView extends AbstractView {
   constructor(data, statsdata, callback) {
@@ -49,6 +50,8 @@ class GameOneView extends AbstractView {
 
   bind() {
     const gameElement = this.element;
+    resizeImages(gameElement);
+
     const backToIntro = gameElement.querySelector(`.back`);
     const gameContent = gameElement.querySelector(`.game__content`);
     const firstAnswer = Array.from(gameContent.querySelectorAll(`input[name="question1"]`));

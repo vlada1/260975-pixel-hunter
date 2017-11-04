@@ -1,5 +1,6 @@
 import AbstractView from '../abstractView';
 import header from './game-header.js';
+import resizeImages from './resizeImages';
 
 class GameTwoView extends AbstractView {
   constructor(data, statsdata, callback) {
@@ -38,6 +39,8 @@ class GameTwoView extends AbstractView {
 
   bind() {
     const gameElement = this.element;
+    resizeImages(gameElement);
+
     const backToIntro = gameElement.querySelector(`.back`);
     const gameContent = gameElement.querySelector(`.game__content`);
 
