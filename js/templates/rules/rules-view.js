@@ -1,4 +1,4 @@
-import AbstractView from '../abstractView';
+import AbstractView from '../abstract-view';
 import header from '../header.js';
 import data from './rules-data';
 

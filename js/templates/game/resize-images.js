@@ -3,7 +3,7 @@ import resize from '../../components/resize';
 export default (element) => {
   const images = element.querySelectorAll(`.game__option img`);
 
-  images.forEach(function (img) {
+  images.forEach((img) => {
     img.onload = () => {
       const frameSize = {
         width: img.width,

@@ -1,4 +1,4 @@
-import AbstractView from '../abstractView';
+import AbstractView from '../abstract-view';
 
 class IntroView extends AbstractView {
   get template() {

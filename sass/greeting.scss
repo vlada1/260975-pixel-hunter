@@ -9,6 +9,9 @@
   transition: background-image 1s ease-in-out;
   background: url("../img/egg_distort.png") no-repeat center;
   background-size: contain;
+  animation-name: fade;
+  animation-duration: 0.6s;
+  animation-fill-mode: backwards;
 }
 
 .greeting__asterisk {

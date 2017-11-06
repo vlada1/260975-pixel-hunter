@@ -1,4 +1,4 @@
-import AbstractView from '../abstractView';
+import AbstractView from '../abstract-view';
 import data from './greeting-data';
 
 class GreetingView extends AbstractView {

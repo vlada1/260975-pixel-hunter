@@ -1,12 +1,12 @@
 import header from './game-header';
-import AbstractView from '../abstractView';
-import resizeImages from './resizeImages';
+import AbstractView from '../abstract-view';
+import resizeImages from './resize-images';
 
 class GameOneView extends AbstractView {
-  constructor(data, statsdata, callback) {
+  constructor(data, statsData, callback) {
     super();
     this.data = data;
-    this.statsdata = statsdata;
+    this.statsData = statsData;
     this.callback = callback;
   }
 
@@ -41,7 +41,7 @@ class GameOneView extends AbstractView {
     </form>
     <div class="stats">
       <ul class="stats">
-        ${this.statsdata.stats.map((result) =>`\
+        ${this.statsData.stats.map((result) =>`\
         <li class="stats__result stats__result--${result}"></li>`).join(``)}
       </ul>
     </div>

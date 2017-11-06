@@ -1,6 +1,6 @@
 import IntroView from './intro-view';
 import {renderPage} from '../../create-screen';
-import {Application} from '../../service';
+import Application from '../../application';
 
 class IntroScreen {
   constructor() {
