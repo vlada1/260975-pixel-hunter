@@ -1,33 +1,34 @@
 import GameThreeView from './game3-view';
 import {renderPage} from '../../create-screen';
-import {changeLive, getStats, resetUserData, resetGameScreen, timerCallback, Application} from '../../service';
 import Timer from '../../components/timer';
+import AppController from '../../service';
+import Application from '../../application';
 
 class GameThreeScreen {
 
-  init(data, statsdata, callback) {
-    this.view = new GameThreeView(data, statsdata, callback);
-    this.timer = new Timer(statsdata.timer);
+  init(data, statsData, callback) {
+    this.view = new GameThreeView(data, statsData, callback);
+    this.timer = new Timer(statsData.timer);
     renderPage(this.view.element);
-    this.timer.start(this.view.element.querySelector(`.game__timer`), timerCallback);
+    this.timer.start(this.view.element.querySelector(`.game__timer`), Application.timerCallback);
 
     this.view.onBackButtonClick = () => {
       const isConfirm = confirm(`Результат игры не сохраняется! Согласны?`);
       if (isConfirm) {
         this.timer.stop();
-        resetUserData();
+        AppController.resetUserData();
         Application.resetGameDataValues();
-        resetGameScreen();
+        AppController.resetGameScreen();
         Application.showGreeting();
       }
     };
 
     this.view.onAnswerClick = (userAnswer) => {
-      const {answer} = userAnswer;
-      if (answer === `painting`) {
-        getStats(this.timer.getTime());
+      const {answer, questionType} = userAnswer;
+      if (answer === questionType) {
+        AppController.getStats(this.timer.getTime());
       } else {
-        changeLive();
+        AppController.changeLive();
       }
       this.timer.stop();
       Application.getNextLevel();

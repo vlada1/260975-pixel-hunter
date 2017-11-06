@@ -1,7 +1,6 @@
 import GreetingView from './greeting-view';
 import {renderPage} from '../../create-screen';
-import {Application} from '../../service';
-
+import Application from '../../application';
 
 class GreetingScreen {
   constructor() {

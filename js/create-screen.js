@@ -5,7 +5,7 @@ export const createDomElement = (templateContent) => {
 };
 
 export const renderPage = (element) => {
-  const mainElement = document.getElementById(`main`);
+  const mainElement = document.querySelector(`main`);
   mainElement.innerHTML = ``;
   return mainElement.appendChild(element);
 };

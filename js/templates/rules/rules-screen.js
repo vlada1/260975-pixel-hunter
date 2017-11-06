@@ -1,6 +1,8 @@
 import RulesView from './rules-view';
 import {renderPage} from '../../create-screen';
-import {resetUserData, resetGameScreen, changeName, Application} from '../../service';
+import AppController from '../../service';
+import Application from '../../application';
+
 
 class RulesScreen {
   constructor() {
@@ -11,9 +13,9 @@ class RulesScreen {
     renderPage(this.view.element);
 
     this.view.onBackButtonClick = () => {
-      resetUserData();
+      AppController.resetUserData();
       Application.resetGameDataValues();
-      resetGameScreen();
+      AppController.resetGameScreen();
       Application.showGreeting();
     };
 
@@ -24,7 +26,7 @@ class RulesScreen {
 
     this.view.onFormSubmit = (evt) => {
       evt.preventDefault();
-      changeName(this.name);
+      AppController.changeName(this.name);
       Application.getNextLevel();
     };
   }

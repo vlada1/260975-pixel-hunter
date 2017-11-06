@@ -1,2 +1,2 @@
-import {Application} from './service';
+import Application from './application';
 Application.init();

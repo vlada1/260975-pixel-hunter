@@ -1,12 +1,12 @@
-import AbstractView from '../abstractView';
+import AbstractView from '../abstract-view';
 import header from './game-header.js';
-import resizeImages from './resizeImages';
+import resizeImages from './resize-images';
 
 class GameThreeView extends AbstractView {
-  constructor(data, statsdata, callback) {
+  constructor(data, statsData, callback) {
     super();
     this.data = data;
-    this.statsdata = statsdata;
+    this.statsData = statsData;
     this.callback = callback;
   }
 
@@ -28,7 +28,7 @@ class GameThreeView extends AbstractView {
     </form>
     <div class="stats">
       <ul class="stats">
-        ${this.statsdata.stats.map((result) =>`\
+        ${this.statsData.stats.map((result) =>`\
         <li class="stats__result stats__result--${result}"></li>`).join(``)}
       </ul>
     </div>
@@ -47,10 +47,11 @@ class GameThreeView extends AbstractView {
       this.onBackButtonClick();
     });
 
-    gameOptionArr.forEach(function (option, i) {
+    gameOptionArr.forEach((option, i) => {
       option.addEventListener(`click`, () => {
         const answer = this.data.answers[i].type;
-        this.onAnswerClick({answer});
+        const questionType = this.data.question === `Найдите фото среди изображений` ? `photo` : `painting`;
+        this.onAnswerClick({answer, questionType});
       });
     }, this);
   }

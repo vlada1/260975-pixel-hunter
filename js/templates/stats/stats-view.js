@@ -1,6 +1,6 @@
 import header from '../header.js';
-import {points, countResult} from '../../components/game-params.js';
-import AbstractView from '../abstractView';
+import {Points, countResult} from '../../components/game-params.js';
+import AbstractView from '../abstract-view';
 
 class StatsView extends AbstractView {
   constructor(data) {
@@ -18,6 +18,14 @@ class StatsView extends AbstractView {
     });
   }
 
+  get template() {
+    return `\
+      ${header}
+      <div class="result">
+        ${this.result.map((round, index) => !round.isWin ? this.loseStats(this.reversedData[index], index + 1) : this.winStats(this.reversedData[index], round, index + 1)).join(``)}
+      </div>`;
+  }
+
   winStats(statsData, result, index) {
     return `\
       <h1>Победа!</h1>
@@ -30,32 +38,32 @@ class StatsView extends AbstractView {
               <li class="stats__result stats__result--${stats}"></li>`).join(``)}
             </ul>
           </td>
-          <td class="result__points">×&nbsp;${points.CORRECT}</td>
-          <td class="result__total">${result.isCorrect * points.CORRECT}</td>
+          <td class="result__points">×&nbsp;${Points.CORRECT}</td>
+          <td class="result__total">${result.isCorrect * Points.CORRECT}</td>
         </tr>
 
         <tr>
           <td></td>
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">${result.fastBonuses}&nbsp;<span class="stats__result stats__result--fast"></span></td>
-          <td class="result__points">×&nbsp;${points.BONUS}</td>
-          <td class="result__total">${result.fastBonuses * points.BONUS}</td>
+          <td class="result__points">×&nbsp;${Points.BONUS}</td>
+          <td class="result__total">${result.fastBonuses * Points.BONUS}</td>
         </tr>
 
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
           <td class="result__extra">${result.livesBonuses}&nbsp;<span class="stats__result stats__result--heart"></span></td>
-          <td class="result__points">×&nbsp;${points.BONUS}</td>
-          <td class="result__total">${result.livesBonuses * points.BONUS}</td>
+          <td class="result__points">×&nbsp;${Points.BONUS}</td>
+          <td class="result__total">${result.livesBonuses * Points.BONUS}</td>
         </tr>
 
         <tr>
           <td></td>
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">${result.slowFine}&nbsp;<span class="stats__result stats__result--slow"></span></td>
-          <td class="result__points">×&nbsp;${points.FINE}</td>
-          <td class="result__total">${result.slowFine * points.FINE}</td>
+          <td class="result__points">×&nbsp;${Points.FINE}</td>
+          <td class="result__total">${result.slowFine * Points.FINE}</td>
         </tr>
 
         <tr>
@@ -81,14 +89,6 @@ class StatsView extends AbstractView {
         </tr>
       </table>`;
 
-  }
-
-  get template() {
-    return `\
-      ${header}
-      <div class="result">
-        ${this.result.map((round, index) => !round.isWin ? this.loseStats(this.reversedData[index], index + 1) : this.winStats(this.reversedData[index], round, index + 1)).join(``)}
-      </div>`;
   }
 
   bind() {
