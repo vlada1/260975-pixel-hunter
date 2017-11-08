@@ -10,7 +10,7 @@ class GameOneScreen {
     this.view = new GameOneView(data, statsData, callback);
     this.timer = new Timer(statsData.timer);
     renderPage(this.view.element);
-    this.timer.start(this.view.element.querySelector(`.game__timer`), Application.timerCallback);
+    this.timer.start(this.view.timerElement, Application.timerCallback);
 
     this.view.onBackButtonClick = () => {
       const isConfirm = confirm(`Результат игры не сохраняется! Согласны?`);

@@ -1,5 +1,10 @@
 import {initialData, setLives, setStats, setName} from './components/game-params';
 
+const Times = {
+  fastTime: 20,
+  slowTime: 10
+}
+
 class AppController {
   constructor() {
     this.userData = Object.assign({}, initialData);
@@ -29,9 +34,9 @@ class AppController {
   }
 
   static getStats(time) {
-    if (time > 20) {
+    if (time > Times.fastTime) {
       this.userData = setStats(this.userData, `fast`, this.gameScreen - 1);
-    } else if (time < 10) {
+    } else if (time < Times.slowTime) {
       this.userData = setStats(this.userData, `slow`, this.gameScreen - 1);
     } else {
       this.userData = setStats(this.userData, `correct`, this.gameScreen - 1);

@@ -19,9 +19,8 @@ class RulesScreen {
       Application.showGreeting();
     };
 
-    this.view.onNameFieldInput = (evt, submitRules) => {
-      submitRules.disabled = (!evt.target.value);
-      this.name = evt.target.value;
+    this.view.onNameFieldInput = (name) => {
+      this.name = name;
     };
 
     this.view.onFormSubmit = (evt) => {
