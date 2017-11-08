@@ -10,6 +10,10 @@ class GameThreeView extends AbstractView {
     this.callback = callback;
   }
 
+  get timerElement() {
+    return this.element.querySelector(`.game__timer`);
+  }
+
   get template() {
     return `\
     ${header(this.callback)}
@@ -41,13 +45,13 @@ class GameThreeView extends AbstractView {
 
     const backToIntro = gameElement.querySelector(`.back`);
     const gameContent = gameElement.querySelector(`.game__content`);
-    const gameOptionArr = gameContent.querySelectorAll(`.game__option`);
+    const gameOptions = gameContent.querySelectorAll(`.game__option`);
 
     backToIntro.addEventListener(`click`, () => {
       this.onBackButtonClick();
     });
 
-    gameOptionArr.forEach((option, i) => {
+    gameOptions.forEach((option, i) => {
       option.addEventListener(`click`, () => {
         const answer = this.data.answers[i].type;
         const questionType = this.data.question === `Найдите фото среди изображений` ? `photo` : `painting`;

@@ -27,7 +27,9 @@ class RulesView extends AbstractView {
     });
 
     nameField.addEventListener(`input`, (evt) => {
-      this.onNameFieldInput(evt, submitRules);
+      submitRules.disabled = (!evt.target.value);
+      const name = evt.target.value;
+      this.onNameFieldInput(name);
     });
 
     submitRules.addEventListener(`click`, (evt) => {

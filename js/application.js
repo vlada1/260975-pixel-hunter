@@ -68,7 +68,7 @@ class Application {
         controller.init();
       }
     } else if (old) {
-      if (id.indexOf(`stats`) === -1 && id !== ControllerId.GAME) {
+      if (id.indexOf(ControllerId.STATS) === -1 && id !== ControllerId.GAME) {
         location.hash = old;
       }
     }

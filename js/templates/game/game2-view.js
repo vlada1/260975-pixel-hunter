@@ -10,6 +10,10 @@ class GameTwoView extends AbstractView {
     this.callback = callback;
   }
 
+  get timerElement() {
+    return this.element.querySelector(`.game__timer`);
+  }
+
   get template() {
     return `\
     ${header(this.callback)}
