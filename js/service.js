@@ -3,7 +3,7 @@ import {initialData, setLives, setStats, setName} from './components/game-params
 const Times = {
   fastTime: 20,
   slowTime: 10
-}
+};
 
 class AppController {
   constructor() {
